@@ -1,0 +1,1 @@
+import{_ as o,r,c as t,d as n,F as c,a as s,o as a}from"./index-3vcWrT3Q.js";const _={},d=s("h2",null,"order",-1);function l(i,m){const e=r("RouterView");return a(),t(c,null,[d,n(e)],64)}const f=o(_,[["render",l]]);export{f as default};
