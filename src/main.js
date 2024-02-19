@@ -1,4 +1,5 @@
-import './assets/main.css'
+// 外部套件
+import 'bootstrap/scss/bootstrap.scss'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
