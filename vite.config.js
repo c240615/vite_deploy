@@ -9,9 +9,13 @@ import eslintPlugin from 'vite-plugin-eslint'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? `/${process.env.REPOSITORY_NAME}/` : '/',
+  base:
+    process.env.NODE_ENV === 'production'
+      ? '/vite_deploy/'
+      : '/',
   plugins: [
     vue(),
+
     eslintPlugin({
       include: ['src/**/*.js', 'src/**/*.vue', 'src/*.js', 'src/*.vue']
     })
