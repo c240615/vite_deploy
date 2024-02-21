@@ -31,7 +31,7 @@
           </div>
           <button
             id="login"
-            class="btn btn-lg btn-primary w-100 mt-3"
+            class="btn btn-lg btn-primary w-100 mt-3 text-white"
             type="submit"
           >
             登入

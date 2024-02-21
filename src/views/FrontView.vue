@@ -2,7 +2,7 @@
   <h2>前台</h2>
   <nav>
     <RouterLink to="/">Home</RouterLink> |
-    <RouterLink to="/cart">cart</RouterLink> |
+    <RouterLink to="/cart"><i class="bi bi-cart-fill"></i></RouterLink> |
     <RouterLink to="/products">products</RouterLink> |
     <RouterLink to="/login">login</RouterLink> |
     <RouterLink to="/admin">後台</RouterLink>

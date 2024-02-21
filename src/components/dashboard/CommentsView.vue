@@ -1,5 +1,5 @@
 <template>
-  <h2>order</h2>
+  <h2>comments</h2>
   <RouterView></RouterView>
 </template>
 

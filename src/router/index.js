@@ -34,12 +34,20 @@ const routes = [
     // 前台巢狀路由
     children: [
       {
-        path: 'order',
-        component: () => import('../views/dashboard/OrderView.vue')
+        path: 'orders',
+        component: () => import('../components/dashboard/OrdersView.vue')
       },
       {
         path: 'products',
-        component: () => import('../views/dashboard/ProductsView.vue')
+        component: () => import('../components/dashboard/ProductsView.vue')
+      },
+      {
+        path: 'coupons',
+        component: () => import('../components/dashboard/CouponsView.vue')
+      },
+      {
+        path: 'comments',
+        component: () => import('../components/dashboard/CommentsView.vue')
       }
     ]
   }
