@@ -1,21 +1,20 @@
 <template>
-  header
-  <RouterView />
-  {{ test }}
-  footer
+  <div><RouterView /></div>
 </template>
 
 <script>
 export default {
   data () {
     return {
-      test: 123
+      date: ''
     }
-  },
-  mounted () {
-    console.log(this.test)
   }
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+@import "./assets/main.scss";
+div {
+  font-family: 'Noto Sans TC Variable', sans-serif;
+}
+</style>

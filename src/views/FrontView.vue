@@ -1,16 +1,18 @@
 <template>
-  <h2>前台</h2>
-  <nav>
-    <RouterLink to="/">Home</RouterLink> |
-    <RouterLink to="/cart"><i class="bi bi-cart-fill"></i></RouterLink> |
-    <RouterLink to="/products">products</RouterLink> |
-    <RouterLink to="/login">login</RouterLink> |
-    <RouterLink to="/admin">後台</RouterLink>
-  </nav>
-  <RouterView></RouterView>
+    <HeaderComponent></HeaderComponent>
+    <RouterView></RouterView>
+    <FooterComponent class="fixed-bottom"></FooterComponent>
 </template>
 
-<script></script>
+<script>
+import HeaderComponent from '../components/HeaderComponent.vue'
+import FooterComponent from '../components/FooterComponent.vue'
+export default {
+  data () {
+    return {}
+  },
+  components: { HeaderComponent, FooterComponent }
+}
+</script>
 
-/*它的 CSS 只作用于当前组件中的元素 */
-<style scoped></style>
+<style scoped lang="scss"></style>

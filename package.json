@@ -10,9 +10,11 @@
     "deploy": "vite build && gh-pages -d dist"
   },
   "dependencies": {
+    "@fontsource-variable/noto-sans-tc": "^5.0.4",
     "axios": "^1.6.5",
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.3",
+    "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
     "pinia": "^2.1.7",
     "vue": "^3.3.11",

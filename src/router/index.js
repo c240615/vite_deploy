@@ -50,6 +50,10 @@ const routes = [
         component: () => import('../components/dashboard/CommentsView.vue')
       }
     ]
+  },
+  {
+    path: '/:pathMatch(.*)',
+    component: () => import('../views/ErrorView.vue')
   }
 ]
 
