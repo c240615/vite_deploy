@@ -1,8 +1,8 @@
 <template>
   <footer class="bg-secondary text-center text-lg-start">
-    <div class="text-center p-3">
+    <div class="text-center p-3 text-dark">
       版權所有 © 2024
-      <a class="text-body" :href="github"> Claire Chou</a>
+      <a class=" link-dark" :href="github"> Claire Chou</a>
     </div>
   </footer>
 </template>

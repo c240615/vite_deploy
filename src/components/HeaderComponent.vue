@@ -1,14 +1,9 @@
 <template>
-  <!-- <nav class="border">
-    <RouterLink to="/">Home</RouterLink> |
-    <RouterLink to="/cart"><i class="bi bi-cart-fill"></i></RouterLink> |
-    <RouterLink to="/products">products</RouterLink> |
-    <RouterLink to="/login">login</RouterLink> |
-    <RouterLink to="/admin">後台</RouterLink>
-  </nav> -->
   <nav class="navbar navbar-expand-md bg-secondary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#"><i class="bi bi-amd fs-3 text-dark"></i></a>
+      <a class="navbar-brand" href="#"
+        ><i class="bi bi-amd fs-3 text-dark"></i
+      ></a>
       <button
         class="navbar-toggler"
         type="button"
@@ -33,14 +28,48 @@
             ></RouterLink>
           </li>
         </ul>
-        <form class="d-flex" role="search">
-          <RouterLink to="/login" class="btn btn-dark">登入</RouterLink>
+        <form class="d-flex">
+          <RouterLink to="/login" class="btn btn-dark" v-if="!isAuthenticated"
+            >登入</RouterLink
+          >
+          <RouterLink
+            to="/"
+            id="logout"
+            class="btn btn-outline-primary"
+            @click.prevent="logout"
+            v-else
+          >
+            登出
+          </RouterLink>
         </form>
       </div>
     </div>
   </nav>
 </template>
 
-<script></script>
+<script>
+import { mapState, mapActions } from 'pinia'
+import { userStore } from '../stores/user.js'
+import axios from 'axios'
+
+export default {
+  methods: { ...mapActions(userStore, ['login', 'logout']) },
+  computed: {
+    ...mapState(userStore, ['isAuthenticated'])
+  },
+  mounted () {
+    const token = document.cookie.replace(
+      /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
+      '$1'
+    )
+    if (token) {
+      this.isAuthenticated = true
+      axios.defaults.headers.common.Authorization = token
+    } else {
+      this.isAuthenticated = false
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped></style>
