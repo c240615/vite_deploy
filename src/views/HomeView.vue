@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <h2>Home</h2>
+  <div class="home text-center">
+    <h1 class="my-3 text-dark"><b>瑞和水果行</b></h1>
   </div>
 </template>
 

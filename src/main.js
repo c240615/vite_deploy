@@ -1,8 +1,11 @@
 // 外部套件
-import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/scss/bootstrap.scss'
-import 'bootstrap'
+// 引入 Bootstrap 的 JavaScript 文件
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+// 引入 Bootstrap 的 CSS 樣式
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 // Supports weights 100-900
 import '@fontsource-variable/noto-sans-tc'
 

@@ -1,24 +1,21 @@
 <template>
   <footer class="bg-secondary text-center text-lg-start">
     <div class="text-center p-3 text-dark">
-      版權所有 © 2024
-      <a class=" link-dark" :href="github"> Claire Chou</a>
+      版權所有 © 2024 Claire
+      <a class="link-dark" :href="github">Document</a>
     </div>
   </footer>
 </template>
 
 <script>
-import dayjs from 'dayjs'
 const { VITE_GITHUB } = import.meta.env
 export default {
   data () {
     return {
-      year: '',
       github: ''
     }
   },
   mounted () {
-    this.year = dayjs().year()
     this.github = VITE_GITHUB
   }
 }

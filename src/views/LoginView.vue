@@ -5,29 +5,29 @@
   >
     <div class="row d-flex justify-content-center" style="width: 100vw">
       <div class="col-8">
-        <form class="form-signin" @submit.prevent="login(username, password)">
+        <form class="form-signin" @submit.prevent="login(user)">
           <div class="form-floating mb-3">
             <input
               type="email"
               class="form-control"
               id="username"
-              v-model="username"
+              v-model="user.username"
               placeholder="name@example.com"
               required
               autofocus
             />
-            <label for="username">Email address</label>
+            <label for="username">電子郵件</label>
           </div>
           <div class="form-floating">
             <input
               type="password"
               class="form-control"
               id="password"
-              v-model="password"
+              v-model="user.password"
               placeholder="Password"
               required
             />
-            <label for="password">Password</label>
+            <label for="password">密碼</label>
           </div>
           <div class="d-flex">
             <RouterLink
@@ -35,6 +35,7 @@
               id="home"
               class="btn btn-lg btn-primary w-100 mt-3 text-white me-3"
               type="button"
+              v-if="isAuthenticated"
             >
               首頁
             </RouterLink>
@@ -42,7 +43,7 @@
               id="login"
               class="btn btn-lg btn-primary w-100 mt-3 text-white"
               type="submit"
-              v-if="!isAuthenticated"
+              v-else
             >
               登入
             </button>
@@ -55,33 +56,21 @@
 
 <script>
 import { mapState, mapActions } from 'pinia'
-import { userStore } from '../stores/user.js'
+import { useAuthStore } from '../stores/auth.js'
 export default {
   data () {
-    return {
-      username: '',
-      password: ''
-    }
+    return { user: { username: '', password: '' } }
   },
-  methods: {
-    ...mapActions(userStore, ['login'])
-  },
-  computed: {
-    ...mapState(userStore, ['isAuthenticated'])
-  },
-  updated () {
-    if (this.isAuthenticated) {
-      this.$router.push('/admin/products')
+  methods: { ...mapActions(useAuthStore, ['login']) },
+  computed: { ...mapState(useAuthStore, ['isAuthenticated']) },
+  watch: {
+    // 登入後轉址後台
+    isAuthenticated (n, o) {
+      if (n) {
+        this.$router.push('/admin/products')
+      }
     }
   }
-  // watch: {
-  //   isAuthenticated(n, o) {
-  //     console.log(n, o);
-  //     if (this.isAuthenticated) {
-  //       this.$router.push("/admin/products");
-  //     }
-  //   },
-  // },
 }
 </script>
 
