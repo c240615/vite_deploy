@@ -72,18 +72,19 @@
   <!--toast-->
   <ToastComponent></ToastComponent>
   <!--toast-->
+  {{ isAuthenticated }}
 </template>
 
 <script>
+// import axios from 'axios'
 import { mapState, mapActions } from 'pinia'
 import { useAuthStore } from '../stores/auth.js'
 import { useToastStore } from '../stores/toast.js'
-import axios from 'axios'
 import ToastComponent from './ToastComponent.vue'
 
 export default {
   methods: {
-    ...mapActions(useAuthStore, ['login', 'logout', 'checkLogin']),
+    ...mapActions(useAuthStore, ['login', 'logout', 'checkLogin', 'getToken']),
     ...mapActions(useToastStore, [
       'setMessage',
       'setType',
@@ -95,22 +96,14 @@ export default {
     ...mapState(useAuthStore, ['isAuthenticated']),
     ...mapState(useToastStore, ['message', 'type'])
   },
-  mounted () {
-    const token = document.cookie.replace(
-      /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
-      '$1'
-    )
-    if (token) {
-      // 2. 預設 header 帶 token
-      axios.defaults.headers.common.Authorization = token
-      this.checkLogin()
+  watch: {
+    isAuthenticated (n, o) {
+      if (n) {
+        this.showToast('登入成功', 'success')
+      } else {
+        this.showToast('登出成功', 'success')
+      }
     }
-    if (!this.isAuthenticated) {
-      this.$router.push('/')
-    }
-  },
-  updated () {
-    this.checkLogin()
   },
   components: { ToastComponent }
 }

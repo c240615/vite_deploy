@@ -1,5 +1,9 @@
+// axios
+// pinia
 import { defineStore } from 'pinia'
+// bootstrap
 import { Toast } from 'bootstrap'
+
 export const useToastStore = defineStore({
   id: 'toast',
   state: () => ({

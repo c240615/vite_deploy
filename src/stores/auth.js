@@ -1,7 +1,9 @@
-import { defineStore, mapActions } from 'pinia'
+// axios
 import axios from 'axios'
+// pinia
+import { defineStore, mapActions } from 'pinia'
 import { useToastStore } from './toast.js'
-
+// env
 const { VITE_URL } = import.meta.env
 
 export const useAuthStore = defineStore({
@@ -17,19 +19,17 @@ export const useAuthStore = defineStore({
       axios
         .post(url, user)
         .then((res) => {
-          // console.log(res.data.message)
           const { token, expired } = res.data
-          // 儲存 Token
           document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
+          return res
         })
-        .then(() => {
+        .then((res) => {
+          localStorage.setItem('isLoggedIn', 'true')
           this.isAuthenticated = true
           this.user = user
-          this.showToast('登入成功', 'success')
         })
         .catch((e) => {
-          alert(e)
-          this.showToast('登入失敗', 'error')
+          this.showToast(e.data.message, 'error')
         })
     },
     logout () {
@@ -37,26 +37,38 @@ export const useAuthStore = defineStore({
       axios
         .post(url)
         .then((res) => {
+          console.log(res)
           document.cookie =
             'hexToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
-          this.showToast(res.data.message, 'success')
+          this.isAuthenticated = false
+          this.user = null
+        }).then(() => {
+          localStorage.removeItem('isLoggedIn')
         })
         .catch((e) => {
           console.log(e)
         })
-      this.user = null
-      this.checkLogin()
     },
     checkLogin () {
       const url = `${VITE_URL}/api/user/check`
       axios
         .post(url)
-        .then((res) => {
+        .then(() => {
           this.isAuthenticated = true
         })
-        .catch((e) => {
+        .catch(() => {
           this.isAuthenticated = false
         })
+    },
+    getToken () {
+      const token = document.cookie.replace(
+        /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
+        '$1'
+      )
+      if (token) {
+        axios.defaults.headers.common.Authorization = token
+      }
+      this.checkLogin()
     }
   }
 })

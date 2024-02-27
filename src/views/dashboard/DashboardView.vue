@@ -1,5 +1,5 @@
 <template>
-  <HeaderComponent></HeaderComponent>
+  <NavComponent></NavComponent>
   <div class="container-fluid my-5 p-4">
     <main class="row g-2">
       <aside class="col-md-3 p-5">
@@ -59,10 +59,27 @@
 </template>
 
 <script>
-import HeaderComponent from '../../components/HeaderComponent.vue'
-
+import NavComponent from '../../components/NavComponent.vue'
+import { mapState, mapActions } from 'pinia'
+import { useAuthStore } from '../../stores/auth'
+import { useToastStore } from '../../stores/toast'
 export default {
-  components: { HeaderComponent }
+  methods: {
+    ...mapActions(useAuthStore, ['checkLogin', 'getToken']),
+    ...mapActions(useToastStore, ['showToast'])
+  },
+  computed: { ...mapState(useAuthStore, ['isAuthenticated']) },
+  created () {
+    this.getToken()
+    this.checkLogin()
+  },
+  mounted () {
+    const isLoggedIn = localStorage.getItem('isLoggedIn')
+    if (!isLoggedIn) {
+      this.$router.push('/')
+    }
+  },
+  components: { NavComponent }
 }
 </script>
 
