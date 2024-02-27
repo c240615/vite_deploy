@@ -35,19 +35,21 @@ const routes = [
     children: [
       {
         path: 'orders',
-        component: () => import('../components/dashboard/OrdersView.vue')
+        component: () => import('../components/dashboard/OrdersComponent.vue')
       },
       {
         path: 'products',
-        component: () => import('../components/dashboard/ProductsView.vue')
+        component: () =>
+          import('../components/dashboard/ProductsComponent.vue')
       },
       {
         path: 'coupons',
-        component: () => import('../components/dashboard/CouponsView.vue')
+        component: () => import('../components/dashboard/CouponsComponent.vue')
       },
       {
         path: 'comments',
-        component: () => import('../components/dashboard/CommentsView.vue')
+        component: () =>
+          import('../components/dashboard/CommentsComponent.vue')
       }
     ]
   },

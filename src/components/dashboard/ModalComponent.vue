@@ -14,7 +14,7 @@
           ></button>
         </div>
         <div class="modal-body">
-          <p>title</p>
+          <p>{{ text }}</p>
         </div>
         <div class="modal-footer">
           <button
@@ -242,6 +242,14 @@
   </div> -->
 </template>
 
-<script></script>
+<script>
+export default {
+  data () {
+    return {
+      text: 123
+    }
+  }
+}
+</script>
 
 <style scoped></style>

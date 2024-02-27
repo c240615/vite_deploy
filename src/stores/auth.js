@@ -1,5 +1,7 @@
-import { defineStore } from 'pinia'
+import { defineStore, mapActions } from 'pinia'
 import axios from 'axios'
+import { useToastStore } from './toast.js'
+
 const { VITE_URL } = import.meta.env
 
 export const useAuthStore = defineStore({
@@ -9,6 +11,7 @@ export const useAuthStore = defineStore({
     user: null
   }),
   actions: {
+    ...mapActions(useToastStore, ['showToast']),
     login (user) {
       const url = `${VITE_URL}/admin/signin`
       axios
@@ -19,32 +22,36 @@ export const useAuthStore = defineStore({
           // 儲存 Token
           document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
         })
-        .catch((e) => {
-          console.log(e)
+        .then(() => {
+          this.isAuthenticated = true
+          this.user = user
+          this.showToast('登入成功', 'success')
         })
-      this.isAuthenticated = true
-      this.user = user
+        .catch((e) => {
+          alert(e)
+          this.showToast('登入失敗', 'error')
+        })
     },
     logout () {
       const url = `${VITE_URL}/logout`
       axios
         .post(url)
-        .then(() => {
+        .then((res) => {
           document.cookie =
             'hexToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+          this.showToast(res.data.message, 'success')
         })
         .catch((e) => {
           console.log(e)
         })
-      this.isAuthenticated = false
       this.user = null
+      this.checkLogin()
     },
     checkLogin () {
       const url = `${VITE_URL}/api/user/check`
       axios
         .post(url)
         .then((res) => {
-          // console.log(res)
           this.isAuthenticated = true
         })
         .catch((e) => {

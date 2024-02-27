@@ -33,7 +33,7 @@
             <RouterLink
               to="/"
               id="home"
-              class="btn btn-lg btn-primary w-100 mt-3 text-white me-3"
+              class="btn btn-lg btn-primary w-100 mt-3 text-white"
               type="button"
               v-if="isAuthenticated"
             >
@@ -52,17 +52,26 @@
       </div>
     </div>
   </div>
+  <ToastComponent></ToastComponent>
 </template>
 
 <script>
 import { mapState, mapActions } from 'pinia'
 import { useAuthStore } from '../stores/auth.js'
+import { useToastStore } from '../stores/toast.js'
+import ToastComponent from '../components/ToastComponent.vue'
 export default {
   data () {
     return { user: { username: '', password: '' } }
   },
-  methods: { ...mapActions(useAuthStore, ['login']) },
-  computed: { ...mapState(useAuthStore, ['isAuthenticated']) },
+  methods: {
+    ...mapActions(useAuthStore, ['login']),
+    ...mapActions(useToastStore, ['showToast'])
+  },
+  computed: {
+    ...mapState(useAuthStore, ['isAuthenticated']),
+    ...mapState(useToastStore, ['message', 'type'])
+  },
   watch: {
     // 登入後轉址後台
     isAuthenticated (n, o) {
@@ -70,7 +79,8 @@ export default {
         this.$router.push('/admin/products')
       }
     }
-  }
+  },
+  components: { ToastComponent }
 }
 </script>
 

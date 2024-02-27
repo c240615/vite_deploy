@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-
+import { Toast } from 'bootstrap'
 export const useToastStore = defineStore({
   id: 'toast',
   state: () => ({
@@ -12,6 +12,14 @@ export const useToastStore = defineStore({
     },
     setType (type) {
       this.type = type
+    },
+    showToast (message, type) {
+      this.setMessage(message)
+      this.setType(type)
+      // toast
+      const toastEl = document.getElementById('liveToast')
+      const toast = new Toast(toastEl)
+      toast.show()
     },
     clearToast () {
       this.message = ''
