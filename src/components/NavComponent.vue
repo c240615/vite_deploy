@@ -42,12 +42,9 @@
           </li>
         </ul>
         <form class="d-flex">
-          <RouterLink to="/login" class="btn btn-dark" v-if="!isAuthenticated"
-            >登入</RouterLink
-          >
           <div
             class="text-center d-flex justify-content-around align-items-center navRight"
-            v-else
+            v-if="userState"
           >
             <RouterLink
               to="/admin/products"
@@ -65,6 +62,7 @@
               登出
             </RouterLink>
           </div>
+          <RouterLink to="/login" class="btn btn-dark" v-else>登入</RouterLink>
         </form>
       </div>
     </div>
@@ -72,17 +70,20 @@
   <!--toast-->
   <ToastComponent></ToastComponent>
   <!--toast-->
-  {{ isAuthenticated }}
 </template>
 
 <script>
-// import axios from 'axios'
 import { mapState, mapActions } from 'pinia'
-import { useAuthStore } from '../stores/auth.js'
-import { useToastStore } from '../stores/toast.js'
+import { useAuthStore } from '../stores/auth'
+import { useToastStore } from '../stores/toast'
 import ToastComponent from './ToastComponent.vue'
 
 export default {
+  data () {
+    return {
+      userState: false
+    }
+  },
   methods: {
     ...mapActions(useAuthStore, ['login', 'logout', 'checkLogin', 'getToken']),
     ...mapActions(useToastStore, [
@@ -98,12 +99,16 @@ export default {
   },
   watch: {
     isAuthenticated (n, o) {
-      if (n) {
-        this.showToast('登入成功', 'success')
-      } else {
-        this.showToast('登出成功', 'success')
+      if (!n) {
+        this.userState = false
+        localStorage.setItem('isLoggedIn', 'false')
       }
     }
+  },
+  created () {
+    this.getToken()
+    const isLoggedIn = localStorage.getItem('isLoggedIn')
+    this.userState = JSON.parse(isLoggedIn)
   },
   components: { ToastComponent }
 }

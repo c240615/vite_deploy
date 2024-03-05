@@ -1,6 +1,6 @@
 <template>
   <NavComponent></NavComponent>
-  <div class="container-fluid my-5 p-4">
+  <div class="container-fluid mt-5 p-4">
     <main class="row g-2">
       <aside class="col-md-3 p-5">
         <div class="btn-group d-flex flex-column">
@@ -35,10 +35,6 @@
           class="d-flex flex-column justify-content-center align-items-center"
         >
           <p>
-            產品頁面： 串接取得、新增、刪除、更新產品 API 啟用狀態顯示 Modal
-            細節欄位 上傳圖片API 分頁功能
-          </p>
-          <p>
             訂單頁面： 串接取得、刪除、更新訂單 API Modal 細節欄位 付款狀態切換
             分頁功能
           </p>
@@ -71,11 +67,10 @@ export default {
   computed: { ...mapState(useAuthStore, ['isAuthenticated']) },
   created () {
     this.getToken()
-    this.checkLogin()
-  },
-  mounted () {
+    // this.checkLogin()
     const isLoggedIn = localStorage.getItem('isLoggedIn')
-    if (!isLoggedIn) {
+    // alert(JSON.parse(isLoggedIn))
+    if (!JSON.parse(isLoggedIn)) {
       this.$router.push('/')
     }
   },

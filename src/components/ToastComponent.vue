@@ -37,7 +37,7 @@
 
 <script>
 import { mapState, mapActions } from 'pinia'
-import { useToastStore } from '../stores/toast.js'
+import { useToastStore } from '../stores/toast'
 export default {
   methods: {
     ...mapActions(useToastStore, ['clearToast'])

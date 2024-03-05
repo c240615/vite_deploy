@@ -1,7 +1,6 @@
 <template>
   <NavComponent></NavComponent>
   <RouterView></RouterView>
-  {{ isAuthenticated }}
   <FooterComponent class="fixed-bottom"></FooterComponent>
 </template>
 
@@ -21,10 +20,6 @@ export default {
     ...mapActions(useToastStore, ['showToast'])
   },
   computed: { ...mapState(useAuthStore, ['isAuthenticated']) },
-  created () {
-    this.getToken()
-    this.checkLogin()
-  },
   components: { NavComponent, FooterComponent }
 }
 </script>

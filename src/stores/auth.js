@@ -26,7 +26,7 @@ export const useAuthStore = defineStore({
         .then((res) => {
           localStorage.setItem('isLoggedIn', 'true')
           this.isAuthenticated = true
-          this.user = user
+          this.user = { useremail: user.username }
         })
         .catch((e) => {
           this.showToast(e.data.message, 'error')
@@ -37,13 +37,14 @@ export const useAuthStore = defineStore({
       axios
         .post(url)
         .then((res) => {
-          console.log(res)
           document.cookie =
             'hexToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+        })
+        .then(() => {
           this.isAuthenticated = false
           this.user = null
-        }).then(() => {
-          localStorage.removeItem('isLoggedIn')
+          localStorage.setItem('isLoggedIn', 'false')
+          this.showToast('登出成功', 'success')
         })
         .catch((e) => {
           console.log(e)
@@ -55,9 +56,11 @@ export const useAuthStore = defineStore({
         .post(url)
         .then(() => {
           this.isAuthenticated = true
+          localStorage.setItem('isLoggedIn', 'true')
         })
         .catch(() => {
           this.isAuthenticated = false
+          localStorage.setItem('isLoggedIn', 'false')
         })
     },
     getToken () {

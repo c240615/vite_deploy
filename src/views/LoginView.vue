@@ -62,7 +62,7 @@ import { useToastStore } from '../stores/toast.js'
 import ToastComponent from '../components/ToastComponent.vue'
 export default {
   data () {
-    return { user: { username: '', password: '' } }
+    return { user: { username: '', password: '' }, userState: false }
   },
   methods: {
     ...mapActions(useAuthStore, ['login']),
@@ -79,6 +79,9 @@ export default {
         this.$router.push('/admin/products')
       }
     }
+  },
+  created () {
+    this.userState = this.isAuthenticated
   },
   components: { ToastComponent }
 }
