@@ -21,7 +21,7 @@
           <td class="text-end">$ {{ product.origin_price }}</td>
           <td class="text-end">$ {{ product.price }}</td>
           <td>
-            <span v-if="product.is_enabled" class="text-success">啟用</span>
+            <span v-if="product.is_enabled" class="text-primary">啟用</span>
             <span v-else>未啟用</span>
           </td>
           <td>
@@ -48,6 +48,7 @@
     <!-- 分頁元件 -->
     <PaginationComponent
       :pages="pages"
+      :item="item"
       :get-admin-products="getAdminProducts"
     ></PaginationComponent>
     <!-- /分頁元件 -->
@@ -55,6 +56,7 @@
   <!-- Modal -->
   <ProductModal
     :temp-item="tempItem"
+    :is-new="isNew"
     :update-product="updateProduct"
     ref="pModal"
   ></ProductModal>
@@ -63,6 +65,8 @@
     :delete-product="deleteProduct"
     ref="dModal"
   ></DeleteModal>
+  <!--ToastComponent-->
+  <ToastComponent></ToastComponent>
   <p v-if="!isNew"></p>
 </template>
 
@@ -71,21 +75,25 @@ import axios from 'axios'
 import { mapState, mapActions } from 'pinia'
 // store
 import { useAdminStore } from '../../stores/admin'
+import { useToastStore } from '../../stores/toast'
 // component
 import PaginationComponent from '../dashboard/PaginationComponent.vue'
 import ProductModal from './ProductModal.vue'
 import DeleteModal from '../dashboard/DeleteModal.vue'
+import ToastComponent from '../ToastComponent.vue'
 
 const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
   data () {
     return {
       tempItem: {},
-      isNew: false
+      isNew: false,
+      item: 'product'
     }
   },
   methods: {
     ...mapActions(useAdminStore, ['getAdminProducts']),
+    ...mapActions(useToastStore, ['showToast']),
     updateProduct () {
       // 新增
       let url = `${VITE_URL}/api/${VITE_PATH}/admin/product`
@@ -96,13 +104,14 @@ export default {
         method = 'put'
       }
       axios[method](url, { data: this.tempItem })
-        .then(() => {
+        .then((res) => {
           this.getAdminProducts() // 重新取得產品列表
           this.$refs.pModal.closeModal() // 關閉 modal
           this.tempItem = {} // 清空資料
+          this.showToast('成功編輯', 'success')
         })
         .catch((e) => {
-          console.log(e)
+          this.showToast('編輯失敗', 'error')
         })
     },
     deleteProduct () {
@@ -112,9 +121,10 @@ export default {
         .then((res) => {
           this.getAdminProducts()
           this.$refs.dModal.closeModal()
+          this.showToast('成功刪除', 'success')
         })
         .catch((e) => {
-          alert(e)
+          this.showToast('刪除失敗', 'error')
         })
     },
     openModal (status, product) {
@@ -141,10 +151,20 @@ export default {
   computed: {
     ...mapState(useAdminStore, ['adminProducts', 'pages'])
   },
+  watch: {
+    isNew (n, o) {
+      this.getAdminProducts()
+    }
+  },
   mounted () {
     this.getAdminProducts()
   },
-  components: { PaginationComponent, ProductModal, DeleteModal }
+  components: {
+    PaginationComponent,
+    ProductModal,
+    DeleteModal,
+    ToastComponent
+  }
 }
 </script>
 

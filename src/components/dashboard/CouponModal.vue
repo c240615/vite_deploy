@@ -1,5 +1,4 @@
 <template>
- cmodal
   <div
     id="couponModal"
     ref="couponModal"
@@ -8,7 +7,7 @@
     aria-labelledby="couponModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-sm">
       <div class="modal-content border-0">
         <div class="modal-header bg-dark text-white">
           <h5 id="couponModalLabel" class="modal-title">
@@ -24,83 +23,35 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label for="title" class="form-label">標題</label>
+            <label for="title" class="form-label">名稱</label>
             <input
               id="title"
-              v-model="editProduct.title"
+              v-model="editCoupon.title"
               type="text"
               class="form-control"
               placeholder="請輸入標題"
+              required
             />
           </div>
-
-          <div class="row">
-            <div class="mb-3 col-md-6">
-            </div>
-            <div class="mb-3 col-md-6">
-              <label for="unit" class="form-label">單位</label>
-              <input
-                id="unit"
-                v-model="editProduct.unit"
-                type="text"
-                class="form-control"
-                placeholder="請輸入單位"
-              />
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="mb-3 col-md-6">
-              <label for="origin_price" class="form-label">原價</label>
-              <input
-                id="origin_price"
-                v-model.number="editProduct.origin_price"
-                type="number"
-                min="0"
-                class="form-control"
-                placeholder="請輸入原價"
-              />
-            </div>
-            <div class="mb-3 col-md-6">
-              <label for="price" class="form-label">售價</label>
-              <input
-                id="price"
-                v-model.number="editProduct.price"
-                type="number"
-                min="0"
-                class="form-control"
-                placeholder="請輸入售價"
-              />
-            </div>
-          </div>
-          <hr />
-
-          <div class="mb-3">
-            <label for="description" class="form-label">產品描述</label>
-            <textarea
-              id="description"
-              v-model="editProduct.description"
-              type="text"
-              class="form-control"
-              placeholder="請輸入產品描述"
-            >
-            </textarea>
-          </div>
-          <div class="mb-3">
-            <label for="content" class="form-label">庫存</label>
+          <div class="mb-4">
+            <label for="origin_price" class="form-label">折扣</label>
             <input
-              id="content"
-              v-model="editProduct.content"
-              type="text"
+              id="origin_price"
+              v-model.number="editCoupon.percent"
+              type="number"
+              min="0"
+              max="1"
+              step="0.1"
               class="form-control"
-              placeholder="請輸入庫存"
+              placeholder="請輸入折扣 (0 - 1)"
+              required
             />
           </div>
           <div class="mb-3">
             <div class="form-check">
               <input
                 id="is_enabled"
-                v-model="editProduct.is_enabled"
+                v-model="editCoupon.is_enabled"
                 class="form-check-input"
                 type="checkbox"
                 :true-value="1"
@@ -118,7 +69,7 @@
           >
             取消
           </button>
-          <button type="button" class="btn btn-primary" @click="updateProduct">
+          <button type="button" class="btn btn-primary" @click="updateCoupon">
             確認
           </button>
         </div>
@@ -128,12 +79,16 @@
 </template>
 
 <script>
+
 import { Modal } from 'bootstrap'
 
 export default {
-  props: ['tempItem'],
+  props: ['tempItem', 'isNew', 'getCoupons', 'updateCoupon'],
   data () {
-    return { modalCoupon: null, editProduct: {} }
+    return {
+      modalCoupon: null,
+      editCoupon: {}
+    }
   },
   methods: {
     openModal () {
@@ -145,12 +100,13 @@ export default {
   },
   watch: {
     tempItem (n, o) {
-      this.editProduct = this.tempItem
+      this.editCoupon = this.tempItem
     }
   },
   mounted () {
     this.modalCoupon = new Modal(this.$refs.couponModal)
-    this.editProduct = this.tempItem
+    this.editCoupon = this.tempItem
+    this.editCoupon.is_enabled = 0
   }
 }
 </script>

@@ -213,7 +213,7 @@ import { mapActions } from 'pinia'
 import { useAdminStore } from '../../stores/admin'
 
 export default {
-  props: ['tempItem', 'updateProduct'],
+  props: ['tempItem', 'updateProduct', 'isNew'],
   data () {
     return { modalProduct: null, editProduct: {} }
   },

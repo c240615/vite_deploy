@@ -39,14 +39,9 @@
             分頁功能
           </p>
           <p>
-            優惠券頁面： 串接取得、新增、刪除、更新優惠券 API 啟用狀態顯示 Modal
-            細節欄位 分頁功能
-          </p>
-          <p>
             貼文頁面（加分項目）： 串接取得、新增、刪除、更新貼文 API
             啟用公開狀態 Modal 細節欄位 分頁功能
           </p>
-          登入 / 登出 小功能 alert、loading 元件 串接圖片上傳 API
         </div>
         <RouterView></RouterView>
       </section>

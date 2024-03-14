@@ -28,7 +28,7 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-outline-secondary"
+            class="btn btn-outline-success"
             data-bs-dismiss="modal"
           >
             取消
@@ -37,8 +37,17 @@
             type="button"
             class="btn btn-danger"
             @click="deleteProduct"
+            v-if="!this.tempItem.code"
           >
-            確認刪除
+            刪除
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            @click="deleteCoupon"
+            v-if="this.tempItem.code"
+          >
+            刪除
           </button>
         </div>
       </div>
@@ -50,7 +59,7 @@
 // bootstrap
 import { Modal } from 'bootstrap'
 export default {
-  props: ['tempItem', 'deleteProduct'],
+  props: ['tempItem', 'deleteProduct', 'deleteCoupon'],
   data () {
     return { modalDel: null }
   },
@@ -64,6 +73,7 @@ export default {
   },
   mounted () {
     this.modalDel = new Modal(this.$refs.delProductModal)
+    console.log(this.tempItem.code)
   }
 }
 </script>

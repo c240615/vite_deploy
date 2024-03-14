@@ -1,4 +1,3 @@
-// axios
 // pinia
 import { defineStore } from 'pinia'
 // bootstrap
@@ -8,7 +7,7 @@ export const useToastStore = defineStore({
   id: 'toast',
   state: () => ({
     message: '',
-    type: '' // 'success', 'error', 'warning'
+    type: '' // 'success', 'error'
   }),
   actions: {
     setMessage (message) {
