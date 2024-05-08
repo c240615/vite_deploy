@@ -5,13 +5,13 @@
 ### 取得專案
 
 ```bash
-git clone https://github.com/hexschool/vite-template.git
+git clone https://github.com/c240615/vite_deploy.git
 ```
 
 ### 移動到專案資料夾
 
 ```bash
-cd vite-template
+cd vite_deploy
 ```
 
 ## 環境變數
