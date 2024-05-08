@@ -1,0 +1,1 @@
+import{_ as t,c as s,o as c,b as e}from"./index-ruAEl9v8.js";const o={},n={class:"home text-center"},_=e("h1",{class:"my-3 text-dark"},[e("b",null,"瑞和水果行")],-1),a=[_];function r(d,i){return c(),s("div",n,a)}const m=t(o,[["render",r]]);export{m as default};
