@@ -2,7 +2,7 @@
   <div class="container">
     <div class="text-end mt-4">
       <button class="btn btn-outline-danger me-3">刪除所有訂單</button>
-      <button class="btn btn-orange">新增訂單</button>
+      <button class="btn btn-orange" @click="openModal('new')">新增訂單</button>
     </div>
     <table class="table mt-4 text-start">
       <thead>
@@ -11,7 +11,6 @@
           <th width="100">日期</th>
           <th width="80">訂購人</th>
           <th width="70">總金額</th>
-          <th>留言</th>
           <th width="80">付款狀態</th>
           <th width="120">修改資料</th>
         </tr>
@@ -21,8 +20,7 @@
           <td>{{ order.create_at }}</td>
           <td>{{ new Date(order.create_at).toString().slice(4, 10) }}</td>
           <td>{{ order.user.name }}</td>
-          <td class="text-end">{{ order.total }}</td>
-          <td>{{ order.message }}</td>
+          <td class="text-center">{{ order.total }}</td>
           <td v-if="order.is_paid" class="text-primary">已付款</td>
           <td v-else>未付款</td>
           <td>
@@ -30,14 +28,14 @@
               <button
                 type="button"
                 class="btn btn-outline-primary btn-sm"
-                @click="openModal('edit', coupon)"
+                @click="openModal('edit', order)"
               >
                 編輯
               </button>
               <button
                 type="button"
                 class="btn btn-outline-danger btn-sm"
-                @click="openModal('delete', coupon)"
+                @click="openModal('delete', order)"
               >
                 刪除
               </button>
@@ -46,13 +44,33 @@
         </tr>
       </tbody>
     </table>
+    <!-- 訂單編號: 1708185715,
+    "id": "-NqrnNGi18hdAPYSduju",
+    "is_paid": false,
+    "message": "1"
+    <br>
+    products : {{ orders[0].products }}
+    <br>
+    user : {{ orders[0].user }}
+    <br>
+    total : {{ orders[0].total }}
+    <br>
+    num : {{ orders[0].num }} -->
     <!-- 分頁元件 -->
-    <PaginationComponent :pages="pages" :item="item" :get-orders="getOrders"></PaginationComponent>
+    <PaginationComponent
+      :pages="pages"
+      :item="item"
+      :get-orders="getOrders"
+    ></PaginationComponent>
     <!-- /分頁元件 -->
   </div>
   <!-- Modal -->
-  <!-- <DeleteModal
-  ></DeleteModal> -->
+  <OrderModal
+    ref="oModal"
+    :temp-item="tempItem"
+    :is-new="isNew"
+  ></OrderModal>
+  <DeleteModal ref="dModal" :temp-item="tempItem" :is-new="isNew"></DeleteModal>
   <!-- ToastComponent -->
   <ToastComponent></ToastComponent>
 </template>
@@ -65,8 +83,8 @@ import { mapActions } from 'pinia'
 import { useToastStore } from '../../stores/toast'
 // component
 import PaginationComponent from './PaginationComponent.vue'
-
-// import DeleteModal from './DeleteModal.vue'
+import OrderModal from './OrderModal.vue'
+import DeleteModal from './DeleteModal.vue'
 import ToastComponent from '../ToastComponent.vue'
 // env
 const { VITE_URL, VITE_PATH } = import.meta.env
@@ -131,27 +149,26 @@ export default {
           this.showToast('刪除失敗', 'error')
         })
     },
-    openModal (status, coupon) {
+    openModal (status, order) {
       if (status === 'new') {
         this.tempItem = {}
         this.isNew = true
-        // this.$refs.cModal.openModal()
+        this.$refs.oModal.openModal()
       } else if (status === 'edit') {
-        // this.tempItem = { ...coupon }
-        // this.isNew = false
-        // this.$refs.cModal.openModal()
+        this.tempItem = { ...order }
+        this.isNew = false
+        this.$refs.oModal.openModal()
       } else if (status === 'delete') {
-        // this.tempItem = { ...coupon }
-        // this.isNew = false
-        // this.$refs.dModal.openModal()
+        this.tempItem = { ...order }
+        this.isNew = false
+        this.$refs.dModal.openModal()
       }
     }
   },
   mounted () {
     this.getOrders()
   },
-  components: { ToastComponent, PaginationComponent }
-  // PaginationComponent, DeleteModal, OrderModal
+  components: { ToastComponent, PaginationComponent, OrderModal, DeleteModal }
 }
 </script>
 

@@ -45,11 +45,6 @@ const routes = [
       {
         path: 'coupons',
         component: () => import('../components/dashboard/CouponsComponent.vue')
-      },
-      {
-        path: 'comments',
-        component: () =>
-          import('../components/dashboard/CommentsComponent.vue')
       }
     ]
   },

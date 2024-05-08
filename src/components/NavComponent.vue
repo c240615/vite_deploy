@@ -18,28 +18,23 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <RouterLink class="nav-link text-primary" to="/"
-              >最新消息</RouterLink
-            >
-          </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link text-primary" to="/"
-              >當季水果</RouterLink
-            >
-          </li>
-          <li class="nav-item">
             <RouterLink class="nav-link text-primary" data-toggle to="/products"
-              >查詢庫存</RouterLink
+              >產品列表</RouterLink
             >
           </li>
           <li class="nav-item">
             <RouterLink class="nav-link text-primary" to="/">Q&A</RouterLink>
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link text-primary" to="/cart"
-              ><i class="bi bi-cart-fill"></i
-            ></RouterLink>
-          </li>
+          <!-- <li class="nav-item">
+            <RouterLink class="nav-link text-primary position-relative" to="/cart">
+                購物車
+                <span
+                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                >
+                  0
+                </span>
+            </RouterLink>
+          </li> -->
         </ul>
         <form class="d-flex">
           <div
